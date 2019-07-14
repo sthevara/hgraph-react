@@ -23,6 +23,7 @@ class HGraph extends Component {
     })).isRequired,
     score: PropTypes.number,
     color: PropTypes.string,
+    unhealthyPointColor: PropTypes.string,
     width: PropTypes.number,
     height: PropTypes.number,
     margin: PropTypes.shape({
@@ -58,6 +59,7 @@ class HGraph extends Component {
     width: 600,
     height: 600,
     color: '#616363',
+    unhealthyPointColor: '#df6053',
     margin: { top: 70, right: 100, bottom: 70, left: 100 },
     thresholdMin: .25,
     thresholdMax: .75,
@@ -261,8 +263,8 @@ class HGraph extends Component {
       cy: d.cy || cy,
       activeCx,
       activeCy,
-      color: this.thresholdColor(percentageFromValue, this.props.color),
-      fontColor: this.thresholdColor(percentageFromValue, this.props.fontColor),
+      color: this.thresholdColor(percentageFromValue, this.props.color, this.props.unhealthyPointColor),
+      fontColor: this.thresholdColor(percentageFromValue, this.props.fontColor, this.props.unhealthyPointColor),
       unitLabel: d.unitLabel,
       textAnchor,
       verticalAnchor,
@@ -420,8 +422,8 @@ class HGraph extends Component {
     }
   }
 
-  thresholdColor = (value, color) => {
-    return (value < this.props.thresholdMin || value > this.props.thresholdMax) ? '#df6053' : color;
+  thresholdColor = (value, color, unhealthyPointColor) => {
+    return (value < this.props.thresholdMin || value > this.props.thresholdMax) ? unhealthyPointColor : color;
   }
 
   renderThreshold = () => {
